@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-ec5!8dq=^$x7(i*qqhye0r^&0cwgbcvctv!-b#z%9764h@z9_#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://restaurant-management-ssyystem.herokuapp.com/']
+ALLOWED_HOSTS = ['https://restaurant-management-ssyystem.herokuapp.com/','127.0.0.1:8000']
 
 
 # Application definition
@@ -46,6 +46,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -53,8 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    #'django.middleware.security.SecurityMiddleware',
-  'whitenoise.middleware.WhiteNoiseMiddleware',
+  
 ]
 
 ROOT_URLCONF = 'Restaurant_Management_System.urls'
