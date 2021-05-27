@@ -72,9 +72,7 @@
 	color: #eb422a; 
 }
 @font-face {
-	font-family: 'fontello';
-	src: url("../fonts/fontello.eot?52602240");
-	src: url("../fonts/fontello.eot?52602240#iefix") format("embedded-opentype"), url("../fonts/fontello.woff?52602240") format("woff"), url("../fonts/fontello.ttf?52602240") format("truetype"), url("../fonts/fontello.svg?52602240#fontello") format("svg");
+	font-family: sans-serif;
 	font-weight: normal;
 	font-style: normal; 
 }
