@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-ec5!8dq=^$x7(i*qqhye0r^&0cwgbcvctv!-b#z%9764h@z9_#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://restaurant-management-ssyystem.herokuapp.com/']
 
 
 # Application definition
@@ -52,6 +52,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    #'django.middleware.security.SecurityMiddleware',
+  'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Restaurant_Management_System.urls'
@@ -123,6 +126,7 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_ROOT = BASE_DIR / 'staticfile'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
