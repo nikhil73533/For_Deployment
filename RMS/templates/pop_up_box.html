@@ -1,0 +1,46 @@
+<!-- {% comment %} {%load static %} {% endcomment %} -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="{%static '/css/pop_up_box.css' %}">  -->
+    <link rel="stylesheet" href="../../RTMS/static/css/pop_up_box.css">
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+
+    <title>popIcon</title>
+</head>
+
+<body>
+    <div class="popup center">
+        <div class="icon"> <i class="fas fa-cat"></i>
+        </div>
+        <div class="title">
+            Are you sure !!
+        </div>
+        <div class="description">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus debitis, distinctio numquam in quidem
+            soluta fugit laboriosam enim
+
+        </div>
+        <div class="dismiss-btn">
+            <button id="dimiss-popup-btn">Dismiss</button>
+        </div>
+    </div>
+    <div class="center">
+        <button id="open-popup-btn">open popup</button>
+    </div>
+
+    <script>
+        document.getElementById("open-popup-btn").addEventListener("click", function () {
+            document.getElementsByClassName("popup")[0].classList.add("active");
+        });
+        document.getElementById("dismiss-popup-btn").addEventListener("click", function () {
+            document.getElementsByClassName("popup")[0].classList.remove("active");
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{%static 'css/profile_page.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+  <input type="checkbox" name = "" id = "check" value = "">
+<!-- Header area start -->
+<header>
+    <label for="check">
+        <i class="fas fa-bars" id = "sidebar_btn"></i>
+    </label>
+    <div class="left_area">
+        <h3>Kailash <span>Da Dhaba</span></h3>
+    </div>
+    {%if user.is_authenticated %}
+    <div class="right-area">
+        <a href="{%url 'Logout'%}" class="logout_btn">Logout</a>
+    </div>
+    {%endif%}
+</header>
+<!-- Header area end -->
+  <!-- main section area start -->
+  <div class="main_2">
+    <img src="/media/{{user.profile_pic}}" height="100px" width="75px" alt="">
+       <form action="profile" method = "POST" enctype="multipart/form-data" >{%csrf_token%}
+
+        <div class="information">
+          <h1>Edit profile</h1>
+        </div>
+         <input type="text" value = "{{user.Name}}" autocomplete="on" placeholder=" User Name" name = "name">
+         
+         <input type="text" value = {{user.email}} placeholder="Email" name="email">
+         
+         <input type="text" value = {{user.phone}} placeholder="Phone Number" name = "phone">
+       
+         <input type="text" value = "{{user.Address}}" placeholder="Local Address" name = "address">
+         
+         <input type="text" value = {{user.state}} placeholder="state" name = "state">
+         
+         <input type="text" value = {{user.city}} placeholder="city" name = "city">
+         
+         <input type="text" value = {{user.pincode}} placeholder="pincode" name = "pincode">
+         <div class="col-md-6">
+           <input type="file" class="form-control" name="profile">
+       </div>
+
+         <input type="submit"  id = "btn" value = "submit">
+       </form>
+      </div>
+       
+  <!-- main section area end -->
+  <!-- slider area start -->
+  
+  <div class="sidebar">
+      <center>
+        {%if user.is_authenticated%}
+        {%if user.profile_pic %} 
+        <img src="/media/{{user.profile_pic}}" height="100px" width="75px" alt="">
+        {%else%}
+       <img src="../static/user.png" alt="profile pic" class = "profile_img">
+         {%endif%}
+           <!-- <img src="../static/user.png" alt="profile pic" class = "profile_img"> -->
+          <h4>{{user.Name}}</h4>
+          <h4></h4>
+          {%else%}
+           <img src="../static/bg1.jpg" alt="profile_pic" class = "profile_img">
+          <h4>user profile</h4>
+          {%endif%}
+      </center>
+      {%if user.is_authenticated %}
+        <a href="/"><i class="fas fa-home"></i><span>Home</span></a>
+      <a href="#"><i class="fas fa-address-card"></i><span>About</span></a>
+      <a href="#"><i class="fas fa-id-card-alt"></i><span>Contact</span></a>
+      {%else%}
+     <a href="#"><i class="fas fa-home"></i><span>Home</span></a>
+      <a href="account/register"><i class="fas fa-registered"></i><span>Register</span></a>
+      <a href="account/login"><i class="fas fa-sign-in-alt"></i><span>Login</span></a>
+      {%endif%}
+  </div>
+  <!-- slider area end -->
+  <div class="content"></div>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+{% for msg in messages %}
+  swal("Thank You!", '{{msg}}', "success");
+{%endfor%}
+
+</script>
+</body>
+</html>
+
+
+

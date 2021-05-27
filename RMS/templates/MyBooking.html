@@ -1,0 +1,160 @@
+{%load static%}
+{%load cart %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href='https://www.soengsouy.com/favicon.ico' rel='icon' type='image/x-icon'/>
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{%static '/css/MyOrders.css' %}">
+  <title>Shoping Cart</title>
+</head>
+
+<body>
+
+  <!-- Header area -->
+  <div class="menu">
+
+    <div class="heading">
+      <h1>KAILASH DA DHABA</h1>
+      <h3>&mdash; MY BOOKINGS &mdash;</h3>
+
+    </div>
+  </div>
+  <!-- Header area finish -->
+  <!-- nav area start -->
+
+  <div class="nav">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="{%url 'BookTable'%}">Book Table</a>
+      </li>
+       <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+      
+    </ul>
+  </div>
+  <!-- nav area end -->
+
+  <div class="container">
+    <div class="border rounded p-4 m-4">
+      <div class="display-4">MY Bookings</div>
+      <table class="table">
+
+        <thead>
+          <tr>
+            <th scope="col">Sno</th>
+            <th scope="col">Table</th>
+             <th scope="col">Table Number</th>
+            <th scope="col">Table Capicity</th>
+            <th scope="col">Members</th>
+            <th scope="col">Date and Time</th>
+            <th scope="col">Booking Conform</th>
+            <th scope="col">Cancle Booking</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% if bookings %}
+        {% for booking in bookings %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            
+            <td>
+             {%if booking.table.Table_pic %} 
+            <img src="/media/{{booking.table.Table_pic}}" height="98" width="145" alt="food_img">
+              {%else%}
+            <img src="../static/Table.jpg" alt="table_pic" height="98" width="145" class = "profile_pic">
+        {%endif%}
+            </td>
+             <td>{{booking.table.id}}</td>
+            <td>{{booking.table.capicity}}</td>
+            <td>{{booking.capicity}}</td>
+            <td>; {{booking.date_time}}</td>
+            <td>
+              {%if booking.Conform %}
+                <small class="badge badge-success">Conform</small>
+              {% else %}
+              <small class="badge badge-warning">Not Conform</small>
+              {% endif %}
+              </td>
+            <td>
+              
+
+            {%if not order.deliver_status %}
+              {% if booking|penilty_calculater %}
+                  <button type="button" data-target="#mymodel_1" data-toggle="modal" class="btn btn-primary">Cancle</button>
+                {% else %}
+                <form action="{{request.path}}" method="POST">{% csrf_token %}
+                <input type="text" value={{booking.id}} name="booking_no" hidden>
+                <button type="submit"   name="Cancle_with_no_penilty" value="Cancle_with_no_penilty"
+                  class="btn btn-primary">Cancle</button>
+                </form> 
+              {% endif %}
+            {% endif %}
+              
+               
+               
+             
+
+              <!-- for cancle button -->
+
+              <div class="modal" id="mymodel_1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h3 class="text-center text-danger ">Warning</h3>
+
+                    </div>
+                    <div class="modal-body">
+                      <p>This is warning about that you are cancel your booking after  <strong>one hour</strong> you have to pay panilty of <strong> 25</strong>
+                        for this order when you order next time
+                      </p>
+                    </div>
+                    <div class="modal-footer">
+                      <form action="{{request.path}}" method='POST'>{% csrf_token %}
+                        <input type="text" value={{order.id}} name="order_no" hidden>
+                        <button type="submit" class="btn btn-success text-center" name="cancle" value="Cancle">I aggree</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- cancle area end -->
+
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        {% else %}
+        <div class="text-center">
+          <h1>No Bookings</h1>
+        </div>
+        {% endif %}
+      </table>
+
+    </div>
+  </div>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script>
+{% for msg in messages %}
+  swal("Thank You!", '{{msg}}', "success");
+{%endfor%}
+  </script>
+  
+</body>
+
+</html>

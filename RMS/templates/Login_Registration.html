@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link href='https://www.soengsouy.com/favicon.ico' rel='icon' type='image/x-icon'/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static '/css/login_registration.css' %}">
+    <title>Restaurant Management System | Sign Up</title>
+</head>
+
+<body>
+    <div class="hero">
+        <div class="form-box">
+            <div class="button-box">
+                <din id="btn">
+                </din>
+                <button type="button" class="toggle-btn" onclick="login()">Log In</button>
+                <button class="toggle-btn" type="button" onclick="register()">Register</button>
+            </div>
+           
+             <form action="login" class="input-group" id="login" method = "POST">
+             {%csrf_token%}
+                <input type="email" class="input-field" placeholder="Email" name = "email" required>
+                <input type="password" class="input-field" placeholder="Enter Password" name = "password" required>
+                  <div class="check-box">
+                  </div>
+                <input type = "submit" value = "Login" class="submit-btn"/>
+                <div class = "check-box"></div>
+                <div class="forget_password">
+                
+                    <a href = "{%url 'reset_password'%}">forget password </a>
+                </div>
+            </form>
+            <form action="register" class="input-group" id="register" method = "POST">{%csrf_token%}
+          
+                <input type="text" class="input-field" placeholder="Full Name" name = "name" required>
+                <input type="email" class="input-field" placeholder="Email" name = "email" required>
+                <input type="password" class="input-field" placeholder="Enter Password" name = "password" required>
+                 <input type="password" class="input-field" placeholder="Confirm Password" name = "confirm_password" required>
+                <input type="number" class="input-field" placeholder="Phone Number" name = "phone_number" required>
+                <input type="text" class = "input-field" placeholder="Local Address" name = "address" required>
+                <input type="text" class = "input-field" placeholder="city" name = "city" required>
+                <input type="text" class = "input-field-mode" placeholder="state" name = "state" required>
+                <input type="text" class = "input-field-got" placeholder="pincode" name = "pincode" required>
+                <input type = "submit" value = "Register" class="submit-btn"/>
+            </form>
+                <div class = "span">
+                {%for message in messages%}
+                 <h3>{{message}}</h3>
+                 {%endfor%}
+          </div>
+        </div>
+    </div>
+        
+    <script>
+        var x = document.getElementById("login")
+        var y = document.getElementById("register")
+        var z = document.getElementById("btn")
+
+        function register() {
+            x.style.left = "-400px"
+            y.style.left = "50px"
+            z.style.left = "110px"
+        }
+
+        function login() {
+            x.style.left = "50px"
+            y.style.left = "450px"
+            z.style.left = "0px"
+        }
+
+    </script>
+</body>
+
+</html>

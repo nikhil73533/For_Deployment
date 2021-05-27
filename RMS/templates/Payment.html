@@ -1,0 +1,191 @@
+{%load static %}
+{%load cart %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href='https://www.soengsouy.com/favicon.ico' rel='icon' type='image/x-icon'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- library validate -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.js"></script>
+    <!-- style css -->
+    <link rel="stylesheet" href="{%static 'css/Payment.css'%}">
+    <title>Payment</title>
+</head>
+
+<body>
+  
+<!-- Header area start  -->
+<div class="menu">
+    
+    <div class="heading">
+        <h1>KALASH DA DHABA</h1>
+        <h3>&mdash; PAYMENT &mdash;</h3>
+         
+    </div>
+</div>
+<!-- Header area end  -->
+  
+  <h2>Payment Form</h2>
+  <div class="row">
+      <div class="col-75">
+          <div class="container">
+              <form id="validate" action="#" method="POST">{%csrf_token%}
+                  <div class="row">
+                      <div class="col-50">
+                          <h3>Billing Address</h3>
+                          <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                          <input type="text" id="fname" name="Name" value="{{user.Name}}" placeholder="Soeng.Souy"disabled>
+                          <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                          <input type="text" id="email" name="Email"  value="{{user.email}}" placeholder="soeng.souy@gmail.com" disabled>
+                          <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                          <input type="text" id="adr" name="Address"  value = "{{user.Address}}" placeholder="110 W. 15th Phnom Penh" required>
+                          <label for="city"><i class="fa fa-institution"></i> City</label>
+                          <input type="text" id="city" name="city" placeholder="Phnom Penh" value = {{user.city}} required>
+  
+                          <div class="row">
+                              <div class="col-50">
+                                  <label for="state">State</label>
+                                  <input type="text" id="state" value = {{user.state}} name="state" placeholder="Phnom Penh"required>
+                              </div>
+                              <div class="col-50">
+                                  <label for="zip">Pin Code</label>
+                                  <input type="text" id="zip" name="zip" value = {{user.pincode}} placeholder="xxxx"required>
+                              </div>
+                          </div>
+                      </div>
+  
+                      <div class="col-50">
+                          <h3>Payment</h3>
+                          <label for="fname">Accepted Cards</label>
+                          <div class="icon-container">
+                              <i class="fa fa-cc-visa" style="color:navy;"></i>
+                              <i class="fa fa-cc-amex" style="color:blue;"></i>
+                              <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                              <i class="fa fa-cc-discover" style="color:orange;"></i>
+                          </div>
+                          <div class="col-35">
+                              <div class="col-10">
+                                  <input type="radio" class="cname" id = "COD" autocomplete = "off" name="paymentmethod" value="COD" checked>
+                                  <label for="COD">Cash On Delivery</label>
+                                </div>
+                                <div class="col-10">
+                                    <input type="radio" id = "CARD" class="cname" autocomplete = "off" name="paymentmethod" value="Card" >
+                                    <label for="CARD">By Card</label>
+                                   
+                                </div>
+                                <div class="col-10">
+                                    <input type="radio" id = "UPI" class="cname" autocomplete = "off"  name="paymentmethod" value = "UPI" >
+                                    <label for="UPI">By UPI</label>
+                                </div>
+                            </div>
+                              <div class="row">
+                          </div>
+                      </div>
+                  </div>
+                <input type="submit" onclick= slwal() value="Continue to checkout" class="btn">
+
+              </form>
+          </div>
+      </div>
+      <div class="col-25">
+          <div class="container">
+              <h4>{{food.Food_Name}} <span class="price" style="color:black"> <b>&#8377; {{food.Food_Price}}</b></span></h4>
+              {% if Discount %}
+              <p><a href="#">Discount</a> <span class="price">&#8377; {{difference}}({{food.Discount_In_Percentage}}%)</span></p>
+              {% endif %}
+              <p><a href="#">{{new_food_price}} x {{qty}}</a> <span class="price">&#8377; {{Total_price}} </span></p>
+              {% if user.penilty|is_penilty:request.session.cart  %}
+                <p><a href="#">Penilty</a><span class="price">&#8377; {{user.penilty}} </span></p>
+            {% endif %} 
+              <p><a href="#">CGST</a> <span class="price">{{CGST}}%</span></p>
+              <p><a href="#">SGST</a> <span class="price">{{SGST}}%</span></p>
+              <hr>
+              <p>Total <span class="price" style="color:black"><b>&#8377; {{final_price}}</b></span></p>
+          </div>
+      </div>
+  </div>
+
+  
+  <!-- nav area start -->
+<div class="nav">
+  <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="{%url 'AddCart'%}">Cart</a><span class = "badge badge-info">{{request.session.cart.keys|length}}</span>
+            <li><a href="{%url 'MyOrders'%}">Orders</a><span class = "badge badge-info">{{odr|length}}</span></li>
+      <li><a href="{%url 'FoodMenu'%}">Menu</a>
+      </li>
+      <li><a href="#">Contact</a></li>
+  </ul>
+</div>
+<!-- nav area end -->
+  <!-- script validate js -->
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script>
+      $('#validate').validate({
+          roles: {
+              fullname: {
+                  required: true,
+              },
+              email: {
+                  required: true,
+              },
+              address: {
+                  required: true,
+              },
+              city: {
+                  required: true,
+              },
+              state: {
+                  required: true,
+              },
+              zip: {
+                  required: true,
+              },
+              cardname: {
+                  required: true,
+              },
+              cardnumber: {
+                  required: true,
+              },
+              expmonth: {
+                  required: true,
+              },
+              expyear: {
+                  required: true,
+              },
+              cvv: {
+                  required: true,
+              },
+             
+          },
+          messages: {
+              fullname:"Please input full name*",
+              email:"Please input email*",
+              city:"Please input city*",
+              address:"Please input address*",
+              state:"Please input state*",
+              zip:"Please input address*",
+              cardname:"Please input card name*",
+              cardnumber:"Please input card number*",
+              expmonth:"Please input exp month*",
+              expyear:"Please input exp year*",
+              cvv:"Please input cvv*",
+          },
+      });
+    //Swit alert
+    
+    
+   
+  
+  </script>
+  <script>
+     {% for msg in messages %}
+  swal("Thank You!", '{{msg}}', "success");
+{%endfor%}
+  </script>
+</body>
+</html>

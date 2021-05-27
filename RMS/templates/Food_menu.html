@@ -1,0 +1,127 @@
+{%load static %}
+{%load cart %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <link href='https://www.soengsouy.com/favicon.ico' rel='icon' type='image/x-icon'/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'css/Food_menu.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <title>Food Menu</title>
+</head>
+<body>
+    <!-- Header area -->
+<div class="menu">
+    
+    <div class="heading">
+        <h1>KAILASH DA DHABA</h1>
+        <h3>&mdash; MENU &mdash;</h3>
+         
+    </div>
+    <!-- Header area finish -->
+    <!-- Menu area start -->
+    {%for food_items in food%}
+    <div class="food-items">
+        <img src="/media/{{food_items.food_pic}}"  onClick="document.location='{%url 'FoodOrder' food_items.id  %}'"alt="food_pic">
+        <form action="food_order/{{food_items.id}}/">
+        </form>
+    <div class="details">
+        <div class="details-sub">
+            <h5>
+            
+            <form action="food_order/{{food_items.id}}/" method = "POST">
+            {%csrf_token%}
+            <input type="text" name = "qty" value = {{qty}} hidden>
+            <label for="submit{{food_items.Food_Name}}">{{food_items.Food_Name}}</label>
+                <input type="submit" id = "submit{{food_items.Food_Name}}" hidden>
+            </form>
+            </h5>
+             {%if food_items|is_discount:request.session.cart %}
+            <h5 class="price">&#8377; {{food_items|discount_calculater:request.session.cart}}({{food_items.Discount_In_Percentage}}% off)</h5>
+            {%else%}
+            <h5 class="price">&#8377; {{food_items.Food_Price}}</h5>
+            {%endif%}
+
+
+        </div>
+        <p>{{food_items.Description}}</p>
+        {%if food_items|is_in_cart:request.session.cart %}
+
+        <div class="card-footer p-0 row no-gutters">
+        
+            <form action="{%url 'Cart' %}"  class="col-2" method="POST">{%csrf_token%}
+                <input type="text" name = "food_id" value = {{food_items.id}} hidden>
+                <input type="text" name = "remove" value = 'True' hidden>
+                <input type="submit" value = " - " class=" btn btn-block btn-secondary">
+              </form>
+
+            <div class="text-center col">{{food_items|cart_count:request.session.cart}} in cart</div>
+          <form action="{%url 'Cart' %}"  class="col-2" method="POST">{%csrf_token%}
+            <input type="text" name = "food_id" value = {{food_items.id}} hidden>
+            <input type="submit" value = " + " class=" btn btn-block btn-secondary">
+          </form>
+        </div>
+    {% else %}
+    <form action="{%url 'Cart' %}" method="POST" >{%csrf_token%}
+        <input type="text" name = "food_id" value = {{food_items.id}} hidden>
+        <button type = "submit">Add To Cart</button>
+    </form>
+    {% endif %}
+    </div>
+    
+    </div>
+    {%endfor%}
+</div>
+
+<!-- Filter Bar -->
+<section>
+    <ul>
+        <li class="list " data-filter = "All">Filters <i class="fas fa-filter"></i></li>
+        <li class="list " ><a class = "filter" href="{{request.path}}">All</a></li>
+        {%for category in cate%}
+        <li class="list" ><a  class = "filter" href="/user/menu?ca ={{category}}">{{category}}</a></li>
+        {%endfor%}
+    </ul>
+  </section>
+<!-- Filter Bar end -->
+
+<!-- Search Bar area start -->
+<div class="main">
+    <form action="{{request.path}}"method  ="POST">{%csrf_token%}
+        <input type="text" name = "box" name = "box" placeholder="   Search.... ">
+    <div class="btn">
+        <input type="submit" name = "search" value  = "Search" class="btn-btn"/>
+    </div>
+    </form>
+</div>
+<!-- Search Bar area end -->
+<!-- nav area start -->
+
+<div class="nav">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#">About</a></li>
+         <li><a href="{%url 'MyOrders'%}">Orders</a><span class = "badge badge-info">{{ord|length}}</span></li>
+        <li><a href="{%url 'AddCart'%}">Cart</a><span class = "badge badge-info">{{request.session.cart.keys|length}}</span>
+        </li>
+        <li> <a href="{%url 'Contact'%}">Contact</a></li>
+    </ul>
+</div>
+<!-- nav area end -->
+
+ <script type = "text/javascript">
+// Add active class on selected item
+('.filter').click(function(){
+        this.addClass('active').siblings().removeClass('active')
+    })  
+</script>
+
+ 
+
+</body>
+</html>

@@ -1,0 +1,264 @@
+{%load static %}
+{%load cart %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"href="main.css">
+    <link rel="stylesheet"href="cart.css">
+    <script src="https://kit.fontawesome.com/332a215f17.js" crossorigin="anonymous"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href='https://www.soengsouy.com/favicon.ico' rel='icon' type='image/x-icon'/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'css/Cart.css'%}">
+    <title>Cart</title>
+    <style>
+
+    </style>
+</head>
+<body>
+     <!-- Header area -->
+<div class="menu">
+    
+    <div class="heading">
+        <h1>KALASH DA DHABA</h1>
+        <h3>&mdash; CART &mdash;</h3>
+         
+    </div>
+</div>
+    <!-- Header area finish -->
+    <!-- nav area start -->
+
+<div class="nav">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="{%url 'MyOrders'%}">Orders</a><span class = "badge badge-info">{{order|length}}</span></li>
+        <li><a href="{%url 'FoodMenu'%}">Menu</a>
+        </li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</div>
+<!-- nav area end -->
+
+ <!---Hero Section-->
+ <section id="hero">
+    <div class="hero-container">
+    <div class="hero-logo">
+      <h1 class="font-weight-bold">Cart Products</h1>
+  </div>
+        </div>
+</section>
+<!---End of Hero Section-->
+<!--Cart Section-->
+<section class="mt-5">
+    <div class="container">
+        <div class="cart">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col"class="text-white">Product</th>
+                        <th scope="col"class="text-white">Price</th>
+                        <th scope="col"class="text-white">Quantity</th>
+                        {% if user.penilty|is_penilty:request.session.cart %}
+                        <th scope="col"class="text-white">Panilty</th>
+                        {% endif %}
+                        <th scope="col"class="text-white">Tex(CGST+SGST)</th>
+                        <th scope="col"class="text-white">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for food_items in product%}
+                    <tr>
+                        <td>
+                            <div class="main">
+                                <div class="d-flex">
+                 <img src="/media/{{food_items.food_pic}}"alt="food Img" height="98" width="145">
+                                </div>
+                                <div class="des">
+                                    <p>{{food_items.Food_Name}}</p>
+                                </div>
+                            </div>
+                        </td>
+                         {% if food_items|is_discount:request.session.cart %}
+                        <td>
+                            <h6>&#8377; {{food_items|discount_calculater:request.session.cart}}</h6>
+                        </td>
+                        {% else %}
+                         <td>
+                            <h6>&#8377; {{food_items.Food_Price}}</h6>
+                        </td>
+                        {% endif %}
+                        <td>
+                            <div class="counter">
+                               <h6>{{food_items|cart_count:request.session.cart}} in cart</h6>
+                            </div>
+                        </td>
+                        {% if user.penilty|is_penilty:request.session.cart %}
+                          {% if lis|first_count:food_items%}
+                          <td>
+                            <h6>&#8377; 0</h6>
+                        </td>
+                        {% else %}
+                        <td>
+                          <h6>&#8377; {{user.penilty}}</h6>
+                      </td>
+                        {% endif %}
+                      {% endif %}
+                      <td>
+                        <h6>({{TEX}}%)</h6>
+                    </td>
+                        <td>
+                          <h6>&#8377; {{lis|final_amount:food_items}}</h6>
+                      </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- for cancle button -->
+{% if product|is_empty:request.session.cart %}
+<div class="modal" id="mymodel_1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="text-center text-danger ">Check Out Form</h3>
+          <button type="button" class="close" data-dismiss="modal"> &times; </button>
+        </div>
+        <div class="modal-body">
+         <form action="{{request.path}}" method="POST" >
+             {%csrf_token%}
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputEmail4">Name</label>
+                    <input type="text" name="Name" class="form-control" id="inputEmail4"  value = "{{user.Name}}" placeholder="Name" disabled>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="inputPassword4">Email</label>
+                    <input type="email" name="Email" class="form-control" id="inputPassword4"value = {{user.email}} placeholder="Email" disabled>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">Phone</label>
+                    <input type="text" name="Phone" class="form-control" value = {{user.phone}}  id="inputPhone" placeholder="1234-567-890" disabled>
+                  </div>
+                <div class="form-group">
+                  <label for="inputAddress">Address</label>
+                  <input type="text"  name="Address" class="form-control"value = "{{user.Address}}" id="inputAddress" placeholder="Address">
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputCity">City</label>
+                    <input type="text" name="City" class="form-control"value = {{user.city}} id="inputCity" placeholder="City">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputState">State</label>
+                    <input type="text" name="State" class="form-control"value = {{user.state}} id="inputState" placeholder="State">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="inputZip">pincode</label>
+                    <input type="text" name="Pincode"  class="form-control"value = {{user.pincode}} id="inputZip">
+                  </div>
+                  <hr>
+                  <label for="inputAddress">Payment Method</label>
+                </div>
+                <div class="form-group">
+                  <div class="form-check">
+                    <input class="form-check-input" value="UPI" type="radio"name = "paymentmethod" id="gridCheck1" required>
+                    <label class="form-check-label" for="gridCheck1">
+                      UPI
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" value="CARD" type="radio" id="gridCheck2" name = "paymentmethod"r required >
+                      <label class="form-check-label" for="gridCheck2">
+                        BY CARD
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" value="COD" type="radio"name = "paymentmethod" id="gridCheck3" required>
+                      <label class="form-check-label" for="gridCheck3">
+                        CASH ON DELIVERY
+                      </label>
+                    </div>
+                  </div>
+                <button type="submit" id = "submit" class="btn  float-right bgn-outline-info col-lg-6">Check Out</button>
+         </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  
+              <!-- for cancle button -->
+
+              <div class="modal" id="mymodel_1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h3 class="text-center text-danger ">Empty Alert</h3>
+
+                    </div>
+                    <div class="modal-body">
+                      <p>The cart is Empty </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success text-center" data-dismiss = 'modal'name="cancle" value="Cancle">I aggree</button>
+                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- cancle area end -->
+
+{% endif %}
+  <!-- cancle area end -->
+
+
+<div class="col-lg-4 offset-lg-4">
+    <div class="checkout">
+        <ul>
+            <li class="cart-total">Total
+            <span>&#8377; {{lis|Total_Price:product}}</span></li>
+        </ul>
+        <button type="button" data-target="#mymodel_1" data-toggle="modal" class="proceed-btn">Proceed to Checkout</button>
+
+    </div>
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+{% for msg in messages %}
+  swal("Thank You!", '{{msg}}', "success");
+{%endfor%}
+
+</script>
+
+</div>
+</body>
+</html>
