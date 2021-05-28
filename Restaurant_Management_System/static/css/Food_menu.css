@@ -245,7 +245,7 @@ section ul li.active{
         display: inline-block;
         background: #313131;
         color: rgb(255, 255, 255);
-        width: 394px;
+        width: 387px;
         text-transform: uppercase;
         font-weight: 900;
     }
@@ -263,7 +263,7 @@ section ul li.active{
         font-size: 15px;
         letter-spacing: 2px;
         float: left;
-        width: 95px;
+        width: 85px;
         height: 38px;
         line-height: 43px;
     }}
