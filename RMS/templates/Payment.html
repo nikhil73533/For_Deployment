@@ -98,7 +98,7 @@
               <p><a href="#">Discount</a> <span class="price">&#8377; {{difference}}({{food.Discount_In_Percentage}}%)</span></p>
               {% endif %}
               <p><a href="#">{{new_food_price}} x {{qty}}</a> <span class="price">&#8377; {{Total_price}} </span></p>
-              {% if user.penilty|is_penilty:request.session.cart  %}
+              {% if user.penilty|is_penilty %}
                 <p><a href="#">Penilty</a><span class="price">&#8377; {{user.penilty}} </span></p>
             {% endif %} 
               <p><a href="#">CGST</a> <span class="price">{{CGST}}%</span></p>

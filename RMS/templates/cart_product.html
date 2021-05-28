@@ -78,7 +78,7 @@
                         <th scope="col"class="text-white">Product</th>
                         <th scope="col"class="text-white">Price</th>
                         <th scope="col"class="text-white">Quantity</th>
-                        {% if user.penilty|is_penilty:request.session.cart %}
+                        {% if user.penilty|is_penilty %}
                         <th scope="col"class="text-white">Panilty</th>
                         {% endif %}
                         <th scope="col"class="text-white">Tex(CGST+SGST)</th>
@@ -98,7 +98,7 @@
                                 </div>
                             </div>
                         </td>
-                         {% if food_items|is_discount:request.session.cart %}
+                         {% if food_items|is_discount %}
                         <td>
                             <h6>&#8377; {{food_items|discount_calculater:request.session.cart}}</h6>
                         </td>
@@ -112,7 +112,7 @@
                                <h6>{{food_items|cart_count:request.session.cart}} in cart</h6>
                             </div>
                         </td>
-                        {% if user.penilty|is_penilty:request.session.cart %}
+                        {% if user.penilty|is_penilty %}
                           {% if lis|first_count:food_items%}
                           <td>
                             <h6>&#8377; 0</h6>

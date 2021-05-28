@@ -8,6 +8,53 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+
+
+/* nav bar */
+.nav ul{
+  list-style: none;
+}
+.nav{
+  display: inline-block;
+  text-align: center;
+  position: absolute;
+  top: 19%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.nav li:hover{
+  background: #ff553b;
+}
+.nav>ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  background: #313131;
+  color: rgb(255, 255, 255);
+  width: 1000px;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+.nav>ul>li>a{
+  
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav> ul > li{
+  position: relative;
+  cursor: pointer;
+  font-size: 15px;
+  letter-spacing: 2px;
+  float: left;
+  width: 200px;
+  height: 50px;
+  line-height: 50px;
+}
+
+ 
+
 /* header area */
 .menu{
   padding: 0 10px 30px 10px;
@@ -237,18 +284,20 @@ form.col-2 {
     }
 }
 
+
+@media (max-width: 800px) {
 /* nav bar */
 
 .nav ul{
     list-style: none;
 }
 .nav{
-    display: inline-block;
-    text-align: center;
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  display: inline-block;
+  text-align: center;
+  position: absolute;
+  top: 27%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .nav li:hover{
     background: #ff553b;
@@ -260,7 +309,7 @@ form.col-2 {
     display: inline-block;
     background: #313131;
     color: rgb(255, 255, 255);
-    width: 1000px;
+    width: 394px;
     text-transform: uppercase;
     font-weight: 900;
 }
@@ -268,20 +317,33 @@ form.col-2 {
     
     color: #fff;
     text-decoration: none;
+    font-size: 13px;
 }
 
 .nav> ul > li{
-    position: relative;
-    cursor: pointer;
-    font-size: 15px;
-    letter-spacing: 2px;
-    float: left;
-    width: 200px;
-    height: 50px;
-    line-height: 50px;
-}
+  position: relative;
+  cursor: pointer;
+  font-size: 15px;
+  letter-spacing: 2px;
+  float: left;
+  width: 74px;
+  height: 50px;
+  line-height: 50px;
+}}
 
  
+@media (max-width: 430px) {
+  .nav{
+    display: inline-block;
+    text-align: center;
+    position: absolute;
+    top: 32%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+
+}
 
 
 /* feed back form */
