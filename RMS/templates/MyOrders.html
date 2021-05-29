@@ -23,10 +23,8 @@
   <link rel="stylesheet" href="{%static '/css/MyOrders.css' %}">
   <title>Shoping Cart</title>
 </head>
-
 <body>
-
-  <!-- Header area -->
+<!-- Header area -->
   <div class="menu">
 
     <div class="heading">
@@ -50,13 +48,23 @@
   </div>
   <!-- nav area end -->
 
-  <div class="container">
-    <div class="border rounded p-4 m-4">
-      <div class="display-4">MY Orders</div>
-      <table class="table">
-       
-        <thead>
-          <tr>
+<!---Hero Section-->
+ <section id="hero">
+    <div class="hero-container">
+    <div class="hero-logo">
+      <h1 class="font-weight-bold">My Orders</h1>
+  </div>
+        </div>
+</section>
+<!---End of Hero Section-->
+<!--Cart Section-->
+<section class="mt-5">
+    <div class="container">
+        <div class="cart">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
             <th scope="col">Sno</th>
             <th scope="col">product</th>
             <th scope="col">Name</th>
@@ -66,7 +74,8 @@
             <th scope="col">Recive</th>
             <th scope="col">Cancle Order</th>
           </tr>
-        </thead>
+                </thead>
+                     <table class="table">
         <tbody>
         {% if orders %}
         {% for order in orders %}
@@ -139,15 +148,17 @@
         {% endif %}
       </table>
 
+            </table>
+        </div>
+        </div>
     </div>
-  </div>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script>
+</section>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
 {% for msg in messages %}
   swal("Thank You!", '{{msg}}', "success");
 {%endfor%}
-  </script>
-  
+</script>
 </body>
 
 </html>
