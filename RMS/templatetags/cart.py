@@ -1,4 +1,3 @@
-from datetime import date
 from django import template
 from django.utils import timezone
 import math
@@ -111,9 +110,11 @@ def calculate_lenth_of_bookings(Bookings):
 def penilty_calculater(booking):
     current_time = timezone.now()
     time = current_time - booking.Booking_time
-    time = time.total_seconds()
-    if(time<3600):
-        return False
+    if(time):
+        time = time.total_seconds()
+        print(time)
+        if(time<3600):
+            return False
     return True
 
 

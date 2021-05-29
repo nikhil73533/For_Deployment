@@ -378,7 +378,9 @@ def HandleBooking(capicity,members):
             for i in range(j+1,capicity+1):
                 table_id = Table.objects.get(id = i)
                 table_id_1 = Table.objects.get(id = j)
-                if((Booking.objects.filter(table= table_id).exists() or Booking.objects.filter(table = table_id_1).exists()) and (Booking.objects.filter(table = table_id).Conform ==True or Booking.objects.filter(table= table_id).Conform==True)):
+                Booking_1 = Booking.objects.filter(table = table_id)
+                print("Booking_1",Booking_1)
+                if(Booking.objects.filter(table= table_id).exists() or Booking.objects.filter(table = table_id_1).exists()):
                     print("continue1 ",i," ",j)
                     continue
                 else:    
@@ -396,6 +398,7 @@ def HandleBooking(capicity,members):
 def MyBooking(request):
     user = User.objects.get(id = request.user.id)
     book = Booking.objects.filter(user =user).order_by('-date_time')
+    print(book)
     if(request.method == 'POST'):
         if(request.POST.get('cancle')):
                 bok = request.POST.get('booking_no')
@@ -406,7 +409,7 @@ def MyBooking(request):
                     user.penilty = 25
                 user.save()
                 bk.delete()
-                messages.add_message(request,messages.SUCCESS,'Your Booking have cancled successfully!')
+                messages.add_message(request,messages.SUCCESS,'Your Booking have canceled successfully!')
 
         else:
                 bok = request.POST.get('booking_no')
@@ -439,6 +442,7 @@ def BookTable(request):
         date_time = Date + " " + Time
         date_object = datetime.strptime(date_time,"%Y-%m-%d %H:%M")
         current_time = timezone.now()
+        print("current_time : - ",current_time)
         open_time = Date + " " + "11:00"
         close_time = Date + " " + "18:00"
         future_time_object_one = datetime.strptime(open_time,"%Y-%m-%d %H:%M")
@@ -464,7 +468,7 @@ def BookTable(request):
         else:
             for tbl in many_table_ids:
                 table = Table.objects.get(id =tbl)
-                Boking = Booking(user = user,table = table,capicity = Members,date_time = date_object)
+                Boking = Booking(user = user,table = table,capicity = Members,date_time = date_object,Booking_time = current_time)
                 Boking.save()
             success_booking(request)
             many_table_ids.clear()
