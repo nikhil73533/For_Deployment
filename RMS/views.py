@@ -374,14 +374,12 @@ def HandleBooking(capicity,members):
     print("Lets get in another loop !!")
     if(members>Max):
         print("Oh yah i am in inside")
+        time = timezone.now()
         for j in range(1,capicity+1):
             for i in range(j+1,capicity+1):
                 table_id = Table.objects.get(id = i)
                 table_id_1 = Table.objects.get(id = j)
-                Booking_1 = Booking.objects.filter(table = table_id)
-                print("Booking_1",Booking_1)
                 if(Booking.objects.filter(table= table_id).exists() or Booking.objects.filter(table = table_id_1).exists()):
-                    print("continue1 ",i," ",j)
                     continue
                 else:    
                     if(members<=table_id.capicity + table_id_1.capicity):

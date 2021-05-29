@@ -245,7 +245,7 @@ section ul li.active{
         display: inline-block;
         background: #313131;
         color: rgb(255, 255, 255);
-        width: 387px;
+        width: 343px;
         text-transform: uppercase;
         font-weight: 900;
     }
@@ -266,9 +266,9 @@ section ul li.active{
         width: 85px;
         height: 38px;
         line-height: 43px;
-    }}
+    }
     
-       
+
     
     
     /* Nav Bar end */
@@ -303,5 +303,56 @@ section ul li.active{
     
     
     /* Search area end  */
+
+
+    
+
+/* Filter Bar */
+
+section{
+    padding: 20px;
+    width: 390px;
+    margin: 40px auto;
+    top: 120px;
+    border: 2px soild red;
+    position: absolute;
+    }
+    
+    section ul{
+        display: flex;
+        margin-bottom: 10px;
+        
+    }
+    section ul li{
+        list-style: none;
+        background: rgb(253, 187, 207);
+        padding: 1px 2px;
+        margin: 5px;
+        letter-spacing: 1px;
+        cursor: pointer;
+    
+    }
+    section ul li:hover{
+        background:#03a9f4;
+        color: #fff;
+    }
+    
+    a:hover{
+        color: #fff;
+    }
+    section ul li.active{
+        background: #03a9f4;
+        color: #fff;
+    }
+    
+    .details-sub>h5,a{
+        font-weight: 600;
+        font-size: 13px;
+        text-decoration: none;
+        color: #6f6f6f;
+        cursor: pointer;
+    }
+/* Filters end     */
+    
  }
  
