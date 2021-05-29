@@ -351,35 +351,42 @@ def success(request):
     email.send()
 
 # Handeling Time  and penilties
+
+def  BookingTime(time,table_id):
+    Bookings = Booking.objects.filter(table = table_id)
+    if(Bookings):
+        for book in Bookings:
+            if(book.date_time <= time and book.Conform == True):
+                print("Ok 1 and Ok 2 inside if condition")
+                return True
+    print("Ok 2 and Ok 3 inside if condition")
+    return False
+
 many_table_ids = []
 def HandleBooking(capicity,members):
+    time = timezone.now()
     members = int(members)
     Max = 0
     for i in range(1,capicity+1):
             table_id = Table.objects.get(id = i)
-            if(Booking.objects.filter(table= table_id).exists()):
+            booking_1 = BookingTime(time,table_id)
+            if(Booking.objects.filter(table= table_id).exists() and (booking_1 == True)):
                 continue
             else:
-                print("oh yah lets get start the machine ")
                 if(table_id.capicity==members):
-                    print("capicity == members")
                     return i
                 elif(members<table_id.capicity):
-                    print("capicity >members")
                     return i
                 else:
                     Max = table_id.capicity
-                    print("Max capicity: - ",Max)
-    print("Final Max capicity ",Max)
-    print("Lets get in another loop !!")
     if(members>Max):
-        print("Oh yah i am in inside")
-        time = timezone.now()
         for j in range(1,capicity+1):
             for i in range(j+1,capicity+1):
                 table_id = Table.objects.get(id = i)
                 table_id_1 = Table.objects.get(id = j)
-                if(Booking.objects.filter(table= table_id).exists() or Booking.objects.filter(table = table_id_1).exists()):
+                booking_1 = BookingTime(time,table_id)
+                booking_2 = BookingTime(time,table_id_1)
+                if(Booking.objects.filter(table= table_id).exists() or Booking.objects.filter(table = table_id_1).exists() and (booking_1 or booking_2)):
                     continue
                 else:    
                     if(members<=table_id.capicity + table_id_1.capicity):
