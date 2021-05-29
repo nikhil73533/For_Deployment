@@ -31,7 +31,7 @@
      {%if food_items.food_pic %} 
             <img src="/media/{{food_items.food_pic}}"  onClick="document.location='{%url 'FoodOrder' food_items.id  %}'"alt="food_pic">
     {%else%}
-            <img src="../static/Table.jpg" alt="table_pic"  class = "profile_pic">
+            <img src="../static/Table.jpg" alt="table_pic" onClick="document.location='{%url 'FoodOrder' food_items.id  %}'" class = "profile_pic">
     {%endif%}
     <div class="details">
         <div class="details-sub">

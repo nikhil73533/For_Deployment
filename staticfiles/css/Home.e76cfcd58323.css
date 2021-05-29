@@ -185,7 +185,7 @@ label #sidebar_btn :hover{
  
 .content{
     margin-left: 250px;
-    background: url(../about.jpg) no-repeat;
+    background: url("../about.e644dbf1976d.jpg") no-repeat;
     background-position: center;
     background-size: cover;
     height: 100vh;

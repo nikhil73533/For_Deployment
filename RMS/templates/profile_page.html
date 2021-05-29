@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+        <link href='https://www.soengsouy.com/favicon.ico' rel='icon' type='image/x-icon'/>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +30,12 @@
 <!-- Header area end -->
   <!-- main section area start -->
   <div class="main_2">
-    <img src="/media/{{user.profile_pic}}" class = "img" height="100px" width="75px" alt="">
+ {%if user.profile_pic %} 
+         <img src="/media/{{user.profile_pic}}" class = "img" height="100px" width="75px" alt="">
+        {%else%}
+       <img src="../static/user.png" alt="profile pic" height="100px" width="75px" class = "profile_img">
+         {%endif%}
+
        <form action="profile" method = "POST" enctype="multipart/form-data" >{%csrf_token%}
 
         <div class="information">
