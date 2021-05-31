@@ -9,7 +9,7 @@ from django.contrib.auth.models import auth
 from django.shortcuts import redirect, render
 from .templatetags.cart import final_amount, discount_calculater,cart_count
 from django.utils import timezone
-from .models import Food,Review, orders, Bill,Table,Booking
+from .models import Food,Review, orders, Bill,Table,Booking,ContactUs
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Min, Avg, Count
 from django.shortcuts import get_object_or_404
@@ -351,51 +351,27 @@ def success(request):
     email.send()
 
 # Handeling Time  and penilties
-
-def  BookingTime(time,table_id):
-    Bookings = Booking.objects.filter(table = table_id)
-    if(Bookings):
-        for book in Bookings:
-            if(book.date_time <= time and book.Conform == True):
-                print("Ok 1 and Ok 2 inside if condition")
-                return True
-    print("Ok 2 and Ok 3 inside if condition")
-    return False
-
 many_table_ids = []
 def HandleBooking(capicity,members):
-    time = timezone.now()
     members = int(members)
     Max = 0
     for i in range(1,capicity+1):
             table_id = Table.objects.get(id = i)
-            booking_1 = BookingTime(time,table_id)
-            if(Booking.objects.filter(table= table_id).exists() and (booking_1 == True)):
-                continue
+            if(table_id.capicity==members):
+                return i
+            elif(members<table_id.capicity):
+                return i
             else:
-                if(table_id.capicity==members):
-                    return i
-                elif(members<table_id.capicity):
-                    return i
-                else:
-                    Max = table_id.capicity
+                Max = table_id.capicity
     if(members>Max):
         for j in range(1,capicity+1):
             for i in range(j+1,capicity+1):
                 table_id = Table.objects.get(id = i)
-                table_id_1 = Table.objects.get(id = j)
-                booking_1 = BookingTime(time,table_id)
-                booking_2 = BookingTime(time,table_id_1)
-                if(Booking.objects.filter(table= table_id).exists() or Booking.objects.filter(table = table_id_1).exists() and (booking_1 or booking_2)):
-                    continue
-                else:    
-                    if(members<=table_id.capicity + table_id_1.capicity):
-                        print("capicity <members  and members <capicity1 + capicity2")
+                table_id_1 = Table.objects.get(id = j)   
+                if(members<=table_id.capicity + table_id_1.capicity):
                         many_table_ids.append(i)
-                        print("ok i is in and next j")
                         many_table_ids.append(j)
                         return None
-    print("oh no non no")
     return 0
                 
             
@@ -405,32 +381,29 @@ def MyBooking(request):
     book = Booking.objects.filter(user =user).order_by('-date_time')
     print(book)
     if(request.method == 'POST'):
-        if(request.POST.get('cancle')):
-                bok = request.POST.get('booking_no')
-                bk= orders.objects.get(id = bok)
-                if(user.penilty>0):
-                    user.penilty = user.penilty + 50
-                else:
-                    user.penilty = 25
-                user.save()
-                bk.delete()
-                messages.add_message(request,messages.SUCCESS,'Your Booking have canceled successfully!')
-
-        else:
                 bok = request.POST.get('booking_no')
                 bk = Booking.objects.get(id = bok)
                 bk.delete()
                 messages.add_message(request,messages.SUCCESS,'Your Booking have cancled successfully!')
     return render(request,'MyBooking.html',{'user':user,'bookings':book})
-
-
-
-        
+   
 
 # Contact page
 def Contact(request):
-    return render(request,'index.html')
+    user = User.objects.get(id = request.user.id)
+    if(request.method == 'POST'):
+        name = request.POST.get('Name')
+        email = request.POST.get('Email')
+        Message = request.POST.get('Message')
+        ct = ContactUs(Name = name, Email = email, message = Message)
+        ct.save()
+        messages.info(request,'We will address you complaient')
+    return render(request,'Contact.html',{'user':user})
 
+
+
+def About(request):
+    return render(request,'About.html')
 
 # Boking Table
 @login_required(login_url='Login')
@@ -447,13 +420,11 @@ def BookTable(request):
         date_time = Date + " " + Time
         date_object = datetime.strptime(date_time,"%Y-%m-%d %H:%M")
         current_time = timezone.now()
-        print("current_time : - ",current_time)
         open_time = Date + " " + "11:00"
         close_time = Date + " " + "18:00"
         future_time_object_one = datetime.strptime(open_time,"%Y-%m-%d %H:%M")
         future_time_object_two = datetime.strptime(close_time,"%Y-%m-%d %H:%M")
         date= current_time +  timezone.timedelta(days=7)
-        print("ok1")
         if(current_time>date_object):
             messages.info(request,"Invlid Input")
             return redirect('BookTable')
@@ -461,13 +432,11 @@ def BookTable(request):
             messages.info(request,"Sorry You can book only 7 days after days")
             return redirect('BookTable')
         elif(future_time_object_one>date_object or date_object>future_time_object_two):
-            print("ok2")
             messages.info(request,"Booking Not available")
             return redirect('BookTable')
         if(table_id):
             table = Table.objects.get(id = table_id)
-            print("inside if")
-        elif(table_id ==0):
+        elif(table_id == 0):
             messages.info(request,"Table is not avaible")
             return redirect('BookTable')
         else:

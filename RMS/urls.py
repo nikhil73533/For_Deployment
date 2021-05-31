@@ -19,6 +19,7 @@ urlpatterns = [
     path('contact_us', views.Contact,name = "Contact"),
     path('bood_table', views.BookTable,name = "BookTable"),
     path('MyBooking', views.MyBooking,name = "MyBooking"),
+    path('about', views.About,name = "About"),
      #Password Reset Urls
 
     path('reset_password/',PasswordResetView.as_view(template_name = "user/Password_email.html"),name = 'reset_password'),

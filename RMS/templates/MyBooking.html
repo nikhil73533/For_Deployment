@@ -27,7 +27,7 @@
 
     <div class="heading">
       <h1>KAILASH DA DHABA</h1>
-      <h3>&mdash; MY BOOKINGS &mdash;</h3>
+      <h3>&mdash; MY BOOKINGS  &mdash;</h3>
 
     </div>
   </div>
@@ -98,49 +98,13 @@
               {% endif %}
               </td>
             <td>
-              
-
-            {%if not order.deliver_status %}
-              {% if booking|penilty_calculater %}
-                  <button type="button" data-target="#mymodel_1" data-toggle="modal" class="btn btn-primary">Cancle</button>
-                {% else %}
+            {%if not booking.Conform %}
                 <form action="{{request.path}}" method="POST">{% csrf_token %}
                 <input type="text" value={{booking.id}} name="booking_no" hidden>
                 <button type="submit"   name="Cancle_with_no_penilty" value="Cancle_with_no_penilty"
                   class="btn btn-primary">Cancle</button>
                 </form> 
-              {% endif %}
             {% endif %}
-              
-               
-               
-             
-
-              <!-- for cancle button -->
-
-              <div class="modal" id="mymodel_1">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h3 class="text-center text-danger ">Warning</h3>
-
-                    </div>
-                    <div class="modal-body">
-                      <p>This is warning about that you are cancel your booking after  <strong>one hour</strong> you have to pay panilty of <strong> 25</strong>
-                        for this order when you order next time
-                      </p>
-                    </div>
-                    <div class="modal-footer">
-                      <form action="{{request.path}}" method='POST'>{% csrf_token %}
-                        <input type="text" value={{order.id}} name="order_no" hidden>
-                        <button type="submit" class="btn btn-success text-center" name="cancle" value="Cancle">I aggree</button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- cancle area end -->
-
             </td>
           </tr>
           {% endfor %}

@@ -1,6 +1,4 @@
-
 {%load static%}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,7 +63,7 @@
     </center>
     {%if user.is_authenticated %}
       <a href="#"><i class="fas fa-home"></i><span>Home</span></a>
-    <a href="#"><i class="fas fa-address-card"></i><span>About</span></a>
+    <a href="{%url 'About' %}"><i class="fas fa-address-card"></i><span>About</span></a>
     <a href="{%url 'Contact'%}"><i class="fas fa-id-card-alt"></i><span>Contact</span></a>
     {%else%}
    <a href="#"><i class="fas fa-home"></i><span>Home</span></a>

@@ -105,16 +105,3 @@ def is_it_penilty(order):
 @register.filter(name="calculate_lenth_of_bookings")
 def calculate_lenth_of_bookings(Bookings):
     return len(list(Bookings))
-
-@register.filter(name="penilty_calculater")
-def penilty_calculater(booking):
-    current_time = timezone.now()
-    time = current_time - booking.Booking_time
-    if(time):
-        time = time.total_seconds()
-        print(time)
-        if(time<3600):
-            return False
-    return True
-
-
