@@ -91,6 +91,8 @@ details>p{
     line-height: 28px;
     font-weight: 400;
     align-self: stretch;
+    align-items: center;
+    justify-content: center;
 }
 form{
     height: 20px;

@@ -66,13 +66,13 @@
                 <thead class="thead-dark">
                     <tr>
             <th scope="col">Sno</th>
-            <th scope="col">product</th>
+            <th scope="col">Product</th>
             <th scope="col">Name</th>
             <th scope="col">Quantity</th>
             <th scope="col">Price</th>
             <th scope="col">Date and Time</th>
-            <th scope="col">Recive</th>
-            <th scope="col">Cancle Order</th>
+            <th scope="col">Received</th>
+            <th scope="col">Cancel Order</th>
           </tr>
                 </thead>
                      <table class="table">
@@ -90,7 +90,7 @@
               {%if order.deliver_status %}
                 <small class="badge badge-success">completed</small>
               {% else %}
-              <small class="badge badge-warning">panding</small>
+              <small class="badge badge-warning">pending</small>
               {% endif %}
               </td>
             <td>
@@ -98,20 +98,16 @@
 
             {%if not order.deliver_status %}
               {% if order|is_it_penilty %}
-                  <button type="button" data-target="#mymodel_1" data-toggle="modal" class="btn btn-primary">Cancle</button>
+                  <button type="button" data-target="#mymodel_1" data-toggle="modal" class="btn btn-primary">Cancel</button>
                 {% else %}
                 <form action="{{request.path}}" method="POST">{% csrf_token %}
                 <input type="text" value={{order.id}} name="order_no" hidden>
                 <button type="submit"   name="Cancle_with_no_penilty" value="Cancle_with_no_penilty"
-                  class="btn btn-primary">Cancle</button>
+                  class="btn btn-primary">Cancel</button>
                 </form> 
               {% endif %}
             {% endif %}
-              
-               
-               
-             
-
+ 
               <!-- for cancle button -->
 
               <div class="modal" id="mymodel_1">
@@ -122,14 +118,14 @@
 
                     </div>
                     <div class="modal-body">
-                      <p>This is warning about that you are cancel your order after  <strong>five minuets</strong> you have to pay panilty of <strong>10%</strong>
-                        for this order when you order next time
+                      <p>If you cancel your order after <strong>five minuets</strong> you will be penalised
+                        on this order when you order next time. 
                       </p>
                     </div>
                     <div class="modal-footer">
                       <form action="{{request.path}}" method='POST'>{% csrf_token %}
                         <input type="text" value={{order.id}} name="order_no" hidden>
-                        <button type="submit" class="btn btn-success text-center" name="cancle" value="Cancle">I aggree</button>
+                        <button type="submit" class="btn btn-success text-center" name="cancle" value="Cancle">I agree</button>
                       </form>
                     </div>
                   </div>

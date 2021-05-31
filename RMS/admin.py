@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from .models import Food,Review,Foodtype,orders,Bill,Table,Booking
+from .models import Food,Review,Foodtype,orders,Bill,Table,Booking,ContactUs
 # Register your models here.
 admin.site.register(get_user_model())
 
@@ -21,3 +21,6 @@ admin.site.register(Table)
 
 #Register your models here.
 admin.site.register(Booking)
+
+#Register your models here.
+admin.site.register(ContactUs)

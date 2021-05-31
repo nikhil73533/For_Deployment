@@ -45,7 +45,7 @@
             </form>
             </h5>
              {%if food_items|is_discount %}
-            <h5 class="price">&#8377; {{food_items|discount_calculater:request.session.cart}}({{food_items.Discount_In_Percentage}}% off)</h5>
+            <h5 class="price">&#8377; {{food_items|discount_calculater:request.session.cart}} ({{food_items.Discount_In_Percentage}}% off)</h5>
             {%else%}
             <h5 class="price">&#8377; {{food_items.Food_Price}}</h5>
             {%endif%}
@@ -114,7 +114,7 @@
 <div class="nav">
     <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="{%url 'About'%}">About</a></li>
          <li><a href="{%url 'MyOrders'%}">Orders</a><span class = "badge badge-info">{{ord|length}}</span></li>
         <li><a href="{%url 'AddCart'%}">Cart</a><span class = "badge badge-info">{{request.session.cart.keys|length}}</span>
         </li>

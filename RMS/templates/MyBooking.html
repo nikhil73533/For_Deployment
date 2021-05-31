@@ -69,8 +69,8 @@
             <th scope="col">Table Capicity</th>
             <th scope="col">Members</th>
             <th scope="col">Date and Time</th>
-            <th scope="col">Booking Conform</th>
-            <th scope="col">Cancle Booking</th>
+            <th scope="col">Booking Confirm</th>
+            <th scope="col">Cancel Booking</th>
           </tr>
                 </thead>
                <tbody>
@@ -92,9 +92,9 @@
             <td>; {{booking.date_time}}</td>
             <td>
               {%if booking.Conform %}
-                <small class="badge badge-success">Conform</small>
+                <small class="badge badge-success">Confirm</small>
               {% else %}
-              <small class="badge badge-warning">Not Conform</small>
+              <small class="badge badge-warning">Not Confirm</small>
               {% endif %}
               </td>
             <td>
@@ -102,7 +102,7 @@
                 <form action="{{request.path}}" method="POST">{% csrf_token %}
                 <input type="text" value={{booking.id}} name="booking_no" hidden>
                 <button type="submit"   name="Cancle_with_no_penilty" value="Cancle_with_no_penilty"
-                  class="btn btn-primary">Cancle</button>
+                  class="btn btn-primary">Cancel</button>
                 </form> 
             {% endif %}
             </td>
