@@ -1,9 +1,9 @@
 from django import template
 from django.contrib import messages
-from django.views.decorators.csrf import csrf_exempt
 import math
-import time
+from reportlab.pdfgen import canvas
 from datetime import datetime
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import auth
 from django.shortcuts import redirect, render
@@ -14,10 +14,21 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Min, Avg, Count
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage,EmailMultiAlternatives
 from django.conf import settings
-from django.template.loader import render_to_string
+from django.template.loader import render_to_string,get_template
 from pathlib import Path
+
+# For generating pdf invoice
+from io import BytesIO
+from xhtml2pdf import pisa
+import os
+
+# Paytm Check_Sum file
+
+
+
+
 
 
 
@@ -216,7 +227,7 @@ def AddCart(request):
                 bill = Bill(order_no = ord,user = user,food = p,payment_status =False,discount = discount_amount,tex = 10,penilty = penilty,total_amount = Amount)
                 bill.save()
                 count+=1
-            success(request)
+                success(request,ord.id,bill.id)
             messages.add_message(request,messages.SUCCESS,'Your have ordered successfully!')
             request.session['cart'] = {}
             user.penilty = 0
@@ -304,7 +315,7 @@ def Payment(request,food_id,qty ):
                 user.penilty = 0
                 user.save()
                 messages.add_message(request,messages.SUCCESS,'Your have ordered successfully!')
-                success(request)
+                success(request,ord.id,bill.id)
         elif(payment_method =="UPI" or payment_method =="CARD"):
             messages.info(request,"This service is not available now")
 
@@ -315,12 +326,18 @@ def Payment(request,food_id,qty ):
 def MyOrders(request):
     user = User.objects.get(id = request.user.id)
     order = orders.objects.filter(user_id =user).order_by('-date_time')
+    print("orders ",order)
     bills = Bill.objects.filter(user = user)
     lis = [request.session.get('cart')]
     if(request.method == 'POST'):
         if(request.POST.get('cancle')):
+                print("start the game")
                 oddr = request.POST.get('order_no')
+                print("order no ",oddr)
+             
                 odr = orders.objects.get(id = oddr)
+                print("order Name ",odr.food.Food_Name)
+                print("oder object ",odr)
                 if(user.penilty>0):
                     user.penilty = user.penilty + math.ceil((odr.total_amount)*0.2)
                 else:
@@ -328,26 +345,39 @@ def MyOrders(request):
                 user.save()
                 odr.delete()
                 messages.add_message(request,messages.SUCCESS,'Your Order has been canceled successfully!')
+                return redirect('MyOrders')
 
         else:
                 oddr = request.POST.get('order_no')
+                print("order object in no penalty area ", oddr)
                 odr = orders.objects.get(id = oddr)
                 odr.delete()
                 messages.add_message(request,messages.SUCCESS,'Your Order has been canceled successfully!')
+                return redirect('MyOrders')
     return render(request,'MyOrders.html',{'user':user,'orders':order,"bills":bills})
 
 # Sending Conformation email
-def success(request):
+def success(request,pk,pk1):
+    print("Initial start ")
+    lis = getpdf(request,pk,pk1)
+    print("starting phase 4")
+    bill_no = str(lis[1]['order_id'])
+    filename = 'Invoice_' + bill_no + '.pdf'
+    print("Entering file name")
     user = User.objects.get(id = request.user.id)
+    print('user object')
     template = render_to_string('email_templates.html',{'user':user})
-    email  = EmailMessage(
+    email  = EmailMultiAlternatives(
         'Thanks for ordering the food',
         template,
         settings.EMAIL_HOST_USER,
         [user.email],
     )
     print("progress")
+    email.attach(filename,lis[0],'application/pdf')
+    print("attached pdf file in email")
     email.fail_silently = False
+    print('hurrye we have done it thank you so mutch!!!!!')
     email.send()
 
 # Handeling Time  and penilties
@@ -467,5 +497,44 @@ def success_booking(request):
         settings.EMAIL_HOST_USER,
         [user.email],
     )
+    email.attach_file('Document.pdf')
     email.fail_silently = False
     email.send()
+
+
+# Generate Invoice
+
+def render_to_pdf(template_src, context_dict={}):
+    print("inside the phase 3")
+    template = get_template(template_src)
+    print("rendering template")
+    html  = template.render(context_dict)
+    print("transfaring the data in template")
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    print("converting template to pdf")
+    if not pdf.err:
+        return result.getvalue()
+    return None
+def getpdf(request, pk,pk1, *args, **kwargs):
+        user = User.objects.get(id = request.user.id)
+        print("start")
+        bill_db = Bill.objects.get(id = pk1)
+        order_id = orders.objects.get(id = pk) 
+        print("complete phase 1")
+        data = {
+            'order_id': bill_db,
+            'quantity': order_id.quantity,
+            'user': user,
+            'date':order_id.date_time,
+            'user_email': bill_db.user.email,
+            'name': bill_db.user.Name,
+            'Bill no.': bill_db,
+            'Discount':bill_db.discount,
+            'Penalty':bill_db.penilty,
+            'amount': bill_db.total_amount,
+        }
+        print("completed phase 2")
+        pdf = render_to_pdf('invoice.html', data)
+        print("completed phase 3")
+        return [pdf,data,]

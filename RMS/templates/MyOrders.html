@@ -21,7 +21,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{%static '/css/MyOrders.css' %}">
-  <title>Shoping Cart</title>
+  <title>My Orders</title>
 </head>
 <body>
 <!-- Header area -->
@@ -124,7 +124,7 @@
                     </div>
                     <div class="modal-footer">
                       <form action="{{request.path}}" method='POST'>{% csrf_token %}
-                        <input type="text" value={{order.id}} name="order_no" hidden>
+                        <input type="text" value={{order.id}} name="order_no" >
                         <button type="submit" class="btn btn-success text-center" name="cancle" value="Cancle">I agree</button>
                       </form>
                     </div>
