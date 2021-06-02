@@ -22,7 +22,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <!-- Bootstrap CSS -->
-    <link href='https://www.soengsouy.com/favicon.ico' rel='icon' type='image/x-icon'/>
+   <link href='../static/gs.jpg' rel='icon' type='image/x-icon'/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,7 +38,7 @@
 <div class="menu">
     
     <div class="heading">
-        <h1>KALASH DA DHABA</h1>
+        <h1>CHEF GUSTEAU'S</h1>
         <h3>&mdash; CART &mdash;</h3>
          
     </div>
@@ -49,11 +49,11 @@
 <div class="nav">
     <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="{%url 'About'%}">About</a></li>
         <li><a href="{%url 'MyOrders'%}">Orders</a><span class = "badge badge-info">{{order|length}}</span></li>
         <li><a href="{%url 'FoodMenu'%}">Menu</a>
         </li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="{%url 'Contact'%}">Contact</a></li>
     </ul>
 </div>
 <!-- nav area end -->
@@ -79,9 +79,9 @@
                         <th scope="col"class="text-white">Price</th>
                         <th scope="col"class="text-white">Quantity</th>
                         {% if user.penilty|is_penilty %}
-                        <th scope="col"class="text-white">Panilty</th>
+                        <th scope="col"class="text-white">Penalty</th>
                         {% endif %}
-                        <th scope="col"class="text-white">Tex(CGST+SGST)</th>
+                        <th scope="col"class="text-white">Tax(CGST+SGST)</th>
                         <th scope="col"class="text-white">Total</th>
                     </tr>
                 </thead>
@@ -229,7 +229,7 @@
                       <p>The cart is Empty </p>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success text-center" data-dismiss = 'modal'name="cancle" value="Cancle">I aggree</button>
+                        <button type="submit" class="btn btn-success text-center" data-dismiss = 'modal'name="cancle" value="Cancle">I agree</button>
                     
                     </div>
                   </div>

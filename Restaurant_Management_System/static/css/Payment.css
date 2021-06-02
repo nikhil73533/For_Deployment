@@ -1,6 +1,6 @@
-@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
+
 body {
-  font-family:"Raleway";
+  font-family:cursive;
   font-size: 17px;
   padding: 8px;
 }
@@ -159,7 +159,7 @@ span.price {
   display: inline-block;
   text-align: center;
   position: absolute;
-  top: 25%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
 }

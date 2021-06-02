@@ -10,7 +10,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link href='https://www.soengsouy.com/favicon.ico' rel='icon' type='image/x-icon'/>
+ <link href='../static/gs.jpg' rel='icon' type='image/x-icon'/>
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -26,7 +26,7 @@
 
 
     <div class="heading">
-      <h1>KAILASH DA DHABA</h1>
+      <h1>CHEF GUSTEAU'S</h1>
       <h3>&mdash; MY BOOKINGS  &mdash;</h3>
 
     </div>
@@ -39,8 +39,8 @@
       <li><a href="/">Home</a></li>
       <li><a href="{%url 'BookTable'%}">Book Table</a>
       </li>
-       <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
+       <li><a href="{%url 'About'%}">About</a></li>
+      <li><a href="{% url 'Contact' %}">Contact</a></li>
       
     </ul>
   </div>

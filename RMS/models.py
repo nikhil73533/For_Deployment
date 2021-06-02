@@ -109,11 +109,10 @@ class orders(models.Model):
     quantity = models.IntegerField()
     deliver_status = models.BooleanField(default=False)
     total_amount = models.FloatField(null=True)
-    check_sum = models.CharField(max_length=100, null=True,blank=True)
     
 
     def __str__(self):
-        return self.user.Name
+        return self.user.email
 
 #Bill Model
 class Bill(models.Model):
@@ -134,6 +133,7 @@ class Review(models.Model):
     food = models.ForeignKey(Food,default=None, on_delete = models.CASCADE)
     content = models.CharField(max_length=5000)
     rate = models.PositiveIntegerField()
+    date_time = models.DateTimeField(null=True)
     def __str__(self):
         return self.user.Name
 
@@ -153,13 +153,13 @@ class Booking(models.Model):
     Booking_time = models.DateTimeField(null= True)
 
     def __str__(self):
-        return self.user.Name
+        return self.user.email
 
 class ContactUs(models.Model):
     Name = models.CharField(max_length=5000, null= True)
     Email = models.CharField(max_length=6000,null  = True)
     message = models.CharField(max_length = 7000)
     def __str__(self):
-        return self.Name
+        return self.Email
 
     

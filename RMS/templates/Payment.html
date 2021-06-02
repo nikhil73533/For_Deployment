@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link href='https://www.soengsouy.com/favicon.ico' rel='icon' type='image/x-icon'/>
+   <link href='../static/gs.jpg' rel='icon' type='image/x-icon'/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- library validate -->
@@ -22,7 +22,7 @@
 <div class="menu">
     
     <div class="heading">
-        <h1>KALASH DA DHABA</h1>
+        <h1>CHEF GUSTEAU'S</h1>
         <h3>&mdash; PAYMENT &mdash;</h3>
          
     </div>
@@ -53,7 +53,7 @@
                               </div>
                               <div class="col-50">
                                   <label for="zip">Pin Code</label>
-                                  <input type="text" id="zip" name="zip" value = {{user.pincode}} placeholder="xxxx"required>
+                                  <input type="text" id="zip" name="pincode" value = {{user.pincode}} placeholder="xxxx"required>
                               </div>
                           </div>
                       </div>
@@ -99,7 +99,7 @@
               {% endif %}
               <p><a href="#">{{new_food_price}} x {{qty}}</a> <span class="price">&#8377; {{Total_price}} </span></p>
               {% if user.penilty|is_penilty %}
-                <p><a href="#">Penilty</a><span class="price">&#8377; {{user.penilty}} </span></p>
+                <p><a href="#">Penalty</a><span class="price">&#8377; {{user.penilty}} </span></p>
             {% endif %} 
               <p><a href="#">CGST</a> <span class="price">{{CGST}}%</span></p>
               <p><a href="#">SGST</a> <span class="price">{{SGST}}%</span></p>

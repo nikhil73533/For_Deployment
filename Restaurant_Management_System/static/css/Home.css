@@ -1,7 +1,8 @@
+
 body{
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    font-family: cursive;
 }
 
 .main{
@@ -17,7 +18,8 @@ body{
 .button {
     display: inline-block;
     border-radius: 4px;
-    background-color: #0fb3be;
+    background-color: #be580f;
+    font-family: cursive;
     border: none;
     color: #FFFFFF;
     text-align: center;
@@ -35,6 +37,7 @@ body{
     color: white;
     padding: 16px 32px;
     text-align: center;
+    font-family: cursive;
     font-size: 16px;
     margin: 4px 2px;
     opacity: 0.6;
@@ -63,15 +66,17 @@ body{
   
   .button:hover span {
     padding-right: 25px;
+    font-family: cursive;
   }
   
   .button:hover span:after {
     opacity: 1;
     right: 0;
+    font-family: cursive;
   }
   header{
     position: fixed;
-    background:#22242A;
+    background:#7e0808;
     padding: 20px;
     width: 100%;
     height: 30px;
@@ -85,14 +90,14 @@ body{
     font-weight: 900;
 }
 .left_area span{
-    color: #1DC4E7;
+    color: #f4df1e;
 }
 
 
 
 .logout_btn{
     padding: 5px;
-    background: #198303;
+    background: #e0b12da1;
     text-decoration: none;
     float: right;
     margin-top: -30px;
@@ -109,7 +114,7 @@ background: #0090BB;
 
 }
 .sidebar{
-    background: #2F323A;
+    background: #4c1616;
     margin-top: 70px;
     padding-top: 30px;
     position: fixed;
@@ -185,7 +190,7 @@ label #sidebar_btn :hover{
  
 .content{
     margin-left: 250px;
-    background: url(../about.jpg) no-repeat;
+    background: url(../about2.jpg) no-repeat;
     background-position: center;
     background-size: cover;
     height: 100vh;
@@ -301,7 +306,7 @@ label #sidebar_btn{
     transition-property: color;
     }
     label #sidebar_btn :hover{
-        color: #1983D3;
+        color: #ecd92b;
     }
 /* Slider button end */
 /* H3 logo */
@@ -317,11 +322,12 @@ header{
     color: #fff;
     margin: 0;
     text-transform: uppercase;
-    font-size: 17px;
+    font-size: 25px;
     font-weight: 900;
+
 }
 .left_area span{
-    color: #1DC4E7;
+    color: #f4511e;
 }
 
 /* H3 logo and */
@@ -332,7 +338,7 @@ header{
 
 .logout_btn{
     padding: 5px;
-    background: #198303;
+    background: #eec231;
     text-decoration: none;
     float: right;
     margin-top: -22px;

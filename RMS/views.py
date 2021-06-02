@@ -78,11 +78,12 @@ def Profile(request):
 @login_required(login_url='/') 
 def FeedBack(request,food_id):
     user = User.objects.get(id = request.user.id)
+    time = timezone.now()
     food = Food.objects.get(id = food_id)
     if(request.method =='POST'):
         comment = request.POST['feedback']
         rating=  request.POST['rating']
-        user_feedback = Review(user = user,food = food, content = comment, rate = rating)
+        user_feedback = Review(user = user,food = food, content = comment, rate = rating,date_time = time)
         user_feedback.save()
         return redirect('FoodOrder',food_id = food_id)
     else:
@@ -117,7 +118,7 @@ def Register(request):
                 return render(request,'Login_Registration.html')
         else:
             messages.info(request,'Password Does Not Match')
-            return redirect('/')
+            return redirect('Register')
     else:
         return render(request,'Login_Registration.html')
 
@@ -263,8 +264,7 @@ def FoodOrder(request,food_id):
                 qty = value + 1
         else:
             qty = 1
-
-    rating = Review.objects.filter(food_id = food_id)
+    rating = Review.objects.filter(food_id = food_id).order_by('-date_time')
     rate = Review.objects.filter(food_id= food_id).aggregate(Avg('rate'))
     num = Review.objects.filter(food_id= food_id).aggregate(Count('user'))
     food.users = num["user__count"]
@@ -453,7 +453,7 @@ def BookTable(request):
         date_object = datetime.strptime(date_time,"%Y-%m-%d %H:%M")
         current_time = timezone.now()
         open_time = Date + " " + "11:00"
-        close_time = Date + " " + "18:00"
+        close_time = Date + " " + "20:00"
         future_time_object_one = datetime.strptime(open_time,"%Y-%m-%d %H:%M")
         future_time_object_two = datetime.strptime(close_time,"%Y-%m-%d %H:%M")
         date= current_time +  timezone.timedelta(days=7)
@@ -464,7 +464,7 @@ def BookTable(request):
             messages.info(request,"Sorry! you book for only 7 days in advance.")
             return redirect('BookTable')
         elif(future_time_object_one>date_object or date_object>future_time_object_two):
-            messages.info(request,"Booking Not available")
+            messages.info(request,"Restaurant is not open at this time")
             return redirect('BookTable')
         if(table_id):
             table = Table.objects.get(id = table_id)
@@ -497,7 +497,6 @@ def success_booking(request):
         settings.EMAIL_HOST_USER,
         [user.email],
     )
-    email.attach_file('Document.pdf')
     email.fail_silently = False
     email.send()
 

@@ -4,7 +4,7 @@
 <html lang="en">
 
 <head>
-	<link href='https://www.soengsouy.com/favicon.ico' rel='icon' type='image/x-icon'/>
+	<link href='../static/gs.jpg' rel='icon' type='image/x-icon'/>
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="{%static 'css/jquery-ui.css'%}">
@@ -42,7 +42,7 @@
 
     <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="{%url 'About' %}">About</a></li>
          <li><a href="{%url 'MyBooking'%}">MyBookings</a><span class = "badge badge-info">{{bookings|calculate_lenth_of_bookings}}</span>
     </ul>
 </div>
@@ -87,7 +87,7 @@
 				<div class="main">
 					<div class="form-right-w3ls ">
 
-						<input class="buttom" type="text" name="members" placeholder="Number of Peoples" required="">
+						<input class="buttom" type="text" name="members" placeholder="Number of People" required="">
 						<div class="clearfix"></div>
 					</div>
 			</div>
@@ -99,7 +99,7 @@
 		</form>
 	</div>
 	<div class="copy">
-		<p>&copy;2021 Table Booking Form. All Rights Reserved | Design by BROTHER OF THE NIGHTS WATCH <a href="{% url 'Home'%}" target="_blank">Kailash Da Dhaba</a></p>
+		<p>&copy;2021 Table Booking Form. All Rights Reserved | Design by BROTHER OF THE NIGHTS WATCH <a href="{% url 'Home'%}" target="_blank">Chef Gusteau's</a></p>
 	</div>
 	<!-- Alerts -->
 	{%for msg in messages%}

@@ -6,6 +6,9 @@ https://templatemo.com/tm-539-simple-house
 
 */
 
+*{
+  font-family: cursive;
+}
 .heading
 {
     background-color: #cb202d;
