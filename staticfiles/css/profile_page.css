@@ -1,7 +1,7 @@
 body{
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: cursive;
 }
 
 
@@ -32,7 +32,7 @@ button a:hover{
 }
 header{
   position: fixed;
-  background:#22242A;
+  background:#7e0808;
   padding: 20px;
   width: 100%;
   height: 30px;
@@ -92,14 +92,14 @@ form .information h1{
   font-weight: 900;
 }
 .left_area span{
-  color: #1DC4E7;
+  color: #f4511e;
 }
 
 
 
 .logout_btn{
   padding: 5px;
-  background: #198303;
+  background: #eec231;
   text-decoration: none;
   float: right;
   margin-top: -30px;
@@ -116,7 +116,7 @@ background: #0090BB;
 
 }
 .sidebar{
-  background: #2F323A;
+  background: #4c1616;
   margin-top: 70px;
   padding-top: 30px;
   position: fixed;
@@ -192,7 +192,7 @@ label #sidebar_btn :hover{
 
 .content{
   margin-left: 250px;
-  background: url(../about.jpg) no-repeat;
+  background: url(../about2.jpg) no-repeat;
   background-position: center;
   background-size: cover;
   height: 100vh;
@@ -401,7 +401,7 @@ label #sidebar_btn :hover{
 
   .logout_btn{
       padding: 5px;
-      background: #198303;
+      background: #eec231;
       text-decoration: none;
       float: right;
       margin-top: -22px;
