@@ -357,6 +357,7 @@ def MyOrders(request):
     return render(request,'MyOrders.html',{'user':user,'orders':order,"bills":bills})
 
 # Sending Conformation email
+@login_required(login_url='Login')
 def success(request,pk,pk1):
     print("Initial start ")
     lis = getpdf(request,pk,pk1)
@@ -419,6 +420,7 @@ def MyBooking(request):
    
 
 # Contact page
+@login_required(login_url='Login')
 def Contact(request):
     user = User.objects.get(id = request.user.id)
     if(request.method == 'POST'):
